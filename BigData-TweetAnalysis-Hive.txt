@@ -2,13 +2,13 @@ Prep work
   a.Dataset from  a set of sample Twitter data contained in a compressed (.zip) folder here:
     http://s3.amazonaws.com/hw-sandbox/tutorial13/SentimentFiles.zip
   b. Upload via Hue to HDFS 
-  b. Download Json serial deserialer for Hive table upload as data is in JSON format 
+  c. Download Json serial deserialer for Hive table upload as data is in JSON format 
   
 
 1.Login to webconsole 
-Local
+
 2. hadoop fs -copyToLocal /data/serde/json-serde-1.3-jar-with-dependencies.jar 
-In Hadoop file system have the json data on tweets, Open Hive and set the below parm to prevent hive checking for keywords so that fields/tables can have keyword 'name; etc.
+In Hadoop file system json data on tweets is avaialable.Open Hive and set the below parm to prevent hive checking for keywords so that fields/tables can have keyword 'name; etc.
 
 3. set hive.support.sql11.reserved.keywords=false;
 4. add jar json-serde-1.3-jar-with-dependencies.jar; 
@@ -32,7 +32,7 @@ In Hue ,select Query editor and add the following
 	
 9. ADD JAR hdfs:////data/serde/json-serde-1.3-jar-with-dependencies.jar
 	
-10.Now select count(*) from tweets_raw2;  
+10.Now select count(*) from tweets_raw;  
 
 In Hive, Webconsole
 11. CREATE table for Dictionary for the keywords and the sentiments (positive , negative)
@@ -46,7 +46,7 @@ In Hive, Webconsole
         )
     ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' 
     STORED AS TEXTFILE
-    LOCATION '/user/n_ganapathy20037603/SentimentFiles/SentimentFiles/upload/data/dictionary';
+    LOCATION '/user/YOUR-USERNAME/SentimentFiles/SentimentFiles/upload/data/dictionary';
 	
 12. CREATE table for time zone with  time-zone , country and comments
     CREATE EXTERNAL TABLE time_zone_map (
@@ -56,7 +56,7 @@ In Hive, Webconsole
         )
     ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' 
     STORED AS TEXTFILE
-    LOCATION '/user/n_ganapathy20037603/SentimentFiles/SentimentFiles/upload/data/time_zone_map';
+    LOCATION '/user/YOUR-USERNAME/SentimentFiles/SentimentFiles/upload/data/time_zone_map';
 
 13. CREATE VIEW tweets_simple AS
           SELECT
